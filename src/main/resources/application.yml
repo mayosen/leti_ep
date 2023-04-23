@@ -4,3 +4,25 @@ logging:
     org.apache.pdfbox: INFO
     org.apache.fontbox: INFO
     com.mayosen.letipractice: DEBUG
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/leti_practice
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+
+  mvc:
+    log-request-details: true
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 15MB
