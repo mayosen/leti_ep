@@ -45,3 +45,12 @@ tesseract. Полученный при распознавании текст в�
 ## Результат
 
 ### Запуск проекта
+Tesseract требует наличие обученных моделей для распознавания текста.
+
+- [osd.traineddata](https://github.com/tesseract-ocr/tessdata/blob/main/osd.traineddata)
+- [rus.traineddata](https://github.com/tesseract-ocr/tessdata/blob/main/rus.traineddata)
+- [eng.traineddata](https://github.com/tesseract-ocr/tessdata/blob/main/eng.traineddata)
+- [pdf.ttf](https://github.com/tesseract-ocr/tesseract/blob/main/tessdata/pdf.ttf)
+
+Их нужно разместить в папке `/tessdata` относительно корня проекта.
+См. [сравнение моделей](https://tesseract-ocr.github.io/tessdoc/Data-Files.html#updated-data-files-september-15-2017).
