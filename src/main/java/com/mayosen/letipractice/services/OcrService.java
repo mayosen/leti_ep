@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 @Slf4j
@@ -22,12 +21,11 @@ public class OcrService {
         this.tesseract = tesseract;
     }
 
-    public String extractTextFromPdf(File file) {
+    public String extractTextFromPdf(String name, byte[] file) {
         StringBuilder documentText = new StringBuilder();
-        log.debug("Started scanning document {}", file.getName());
+        log.debug("Started scanning document '{}'", name);
 
-        try {
-            PDDocument document = PDDocument.load(file);
+        try (PDDocument document = PDDocument.load(file)) {
             PDFRenderer renderer = new PDFRenderer(document);
             log.debug("Found {} pages", document.getNumberOfPages());
 
