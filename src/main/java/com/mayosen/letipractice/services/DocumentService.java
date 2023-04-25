@@ -35,31 +35,43 @@ public class DocumentService {
 
     @Transactional
     public void addDocument(MultipartFile file) {
-        String name = file.getOriginalFilename();
-        byte[] bytes;
+        Document document = new Document();
+        document.setName(file.getOriginalFilename());
+        // TODO: set author
+        updateDocumentFrom(document, extractBytes(file));
+        LocalDate now = LocalDate.now();
+        document.setCreated(now);
+        document.setUpdated(now);
+        documentRepository.save(document);
+    }
 
+    @Transactional
+    public void updateDocument(int id, MultipartFile file) {
+        Document document = findDocumentBy(id);
+        document.setName(file.getOriginalFilename());
+        updateDocumentFrom(document, extractBytes(file));
+        document.setUpdated(LocalDate.now());
+        documentRepository.save(document);
+    }
+
+    private byte[] extractBytes(MultipartFile file) {
         try {
-            bytes = file.getBytes();
+            return file.getBytes();
         } catch (IOException e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatusCode.valueOf(500));
         }
+    }
 
-        String text = ocrService.extractTextFromPdf(name, bytes);
+    private void updateDocumentFrom(Document document, byte[] bytes) {
+        String text = ocrService.extractTextFromPdf(bytes);
         List<String> words = parsingService.parseWords(text);
         List<String> filteredWords = parsingService.filterWords(words);
         String topWords = String.join(", ", parsingService.findTopWords(filteredWords));
 
-        Document document = new Document();
-        document.setName(name);
-        // TODO: author
-        document.setCreated(LocalDate.now());
-        document.setUpdated(LocalDate.now());
         document.setParsedText(text);
         document.setBlob(bytes);
         document.setTopWords(topWords);
-
-        documentRepository.save(document);
     }
 
     public Document findDocumentBy(int id) {

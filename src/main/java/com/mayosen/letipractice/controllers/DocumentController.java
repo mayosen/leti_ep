@@ -10,9 +10,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -26,8 +24,17 @@ public class DocumentController {
     }
 
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> addDocument(@RequestPart MultipartFile file) throws IOException {
+    public ResponseEntity<Void> addDocument(@RequestPart MultipartFile file) {
         documentService.addDocument(file);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateDocument(
+        @PathVariable int id,
+        @RequestPart MultipartFile file
+    ) {
+        documentService.updateDocument(id, file);
         return ResponseEntity.ok().build();
     }
 
@@ -44,7 +51,7 @@ public class DocumentController {
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(resource);
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<AllDocumentsResponse> findAllDocuments() {
         List<DocumentResponse> documents = documentService.findAllDocuments();
         return ResponseEntity.ok(new AllDocumentsResponse(documents));

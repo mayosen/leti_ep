@@ -21,9 +21,9 @@ public class OcrService {
         this.tesseract = tesseract;
     }
 
-    public String extractTextFromPdf(String name, byte[] file) {
+    public String extractTextFromPdf(byte[] file) {
         StringBuilder documentText = new StringBuilder();
-        log.debug("Started scanning document '{}'", name);
+        log.debug("Started scanning document");
 
         try (PDDocument document = PDDocument.load(file)) {
             PDFRenderer renderer = new PDFRenderer(document);
