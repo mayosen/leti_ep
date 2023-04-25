@@ -1,6 +1,7 @@
 package com.mayosen.letipractice.services;
 
 import com.mayosen.letipractice.models.Document;
+import com.mayosen.letipractice.models.User;
 import com.mayosen.letipractice.repos.DocumentRepository;
 import com.mayosen.letipractice.responses.DocumentResponse;
 import org.hibernate.Hibernate;
@@ -34,10 +35,10 @@ public class DocumentService {
     }
 
     @Transactional
-    public void addDocument(MultipartFile file) {
+    public void addDocument(MultipartFile file, int authorId) {
         Document document = new Document();
         document.setName(file.getOriginalFilename());
-        // TODO: set author
+        document.setAuthor(new User(authorId));
         updateDocumentFrom(document, extractBytes(file));
         LocalDate now = LocalDate.now();
         document.setCreated(now);
@@ -46,7 +47,7 @@ public class DocumentService {
     }
 
     @Transactional
-    public void updateDocument(int id, MultipartFile file) {
+    public void updateDocument(int id, MultipartFile file, int authorId) {
         Document document = findDocumentBy(id);
         document.setName(file.getOriginalFilename());
         updateDocumentFrom(document, extractBytes(file));
@@ -85,7 +86,7 @@ public class DocumentService {
             .map(document -> DocumentResponse.builder()
                 .id(document.getId())
                 .name(document.getName())
-                .author(document.getAuthor())
+                .author(document.getAuthor().getLogin())
                 .created(document.getCreated())
                 .updated(document.getUpdated())
                 .parsedText(document.getParsedText())

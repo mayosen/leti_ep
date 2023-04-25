@@ -19,8 +19,9 @@ public class Document {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "author")
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "user_id")
+    private User author;
 
     @Column(name = "created")
     private LocalDate created;

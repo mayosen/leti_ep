@@ -1,12 +1,15 @@
 package com.mayosen.letipractice.controllers;
 
 import com.mayosen.letipractice.models.Document;
+import com.mayosen.letipractice.models.User;
 import com.mayosen.letipractice.responses.AllDocumentsResponse;
 import com.mayosen.letipractice.responses.DocumentResponse;
 import com.mayosen.letipractice.services.DocumentService;
+import com.mayosen.letipractice.services.security.AppUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,17 +27,20 @@ public class DocumentController {
     }
 
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> addDocument(@RequestPart MultipartFile file) {
-        documentService.addDocument(file);
+    public ResponseEntity<Void> addDocument(@RequestPart MultipartFile file, Authentication authentication) {
+        AppUserDetails userDetails = (AppUserDetails) authentication.getPrincipal();
+        documentService.addDocument(file, userDetails.getId());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateDocument(
         @PathVariable int id,
-        @RequestPart MultipartFile file
+        @RequestPart MultipartFile file,
+        Authentication authentication
     ) {
-        documentService.updateDocument(id, file);
+        AppUserDetails userDetails = (AppUserDetails) authentication.getPrincipal();
+        documentService.updateDocument(id, file, userDetails.getId());
         return ResponseEntity.ok().build();
     }
 
