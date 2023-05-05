@@ -1,0 +1,100 @@
+body {
+  background: #eee;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 50px 100px;
+}
+
+.btn {
+  padding: 35px 35px;
+  border-radius: 1000px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  background-color: #0061BB;
+  border: none;
+}
+
+.btn:hover {
+  background-color: #016bcc;
+}
+
+.input {
+  padding: 15px 20px;
+  border: none;
+  border-bottom: 1px solid black;
+  background: none;
+  margin-bottom: 30px;
+}
+
+label {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.menu {
+  gap: 20px;
+}
+
+.menu .btn {
+  width: 400px;
+}
+
+input[type="file"] {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid black;
+  text-align: left;
+  padding: 8px;
+}
+
+tr {
+  height: 150px;
+}
+
+td {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+table {
+  background: #e3e3e3;
+}
+
+.vertical-table th {
+  width: 150px;
+}
+
+.vertical-table .vertical-scroll {
+  text-overflow: initial;
+  white-space: normal;
+}
+
+.btn-wrap {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 20px;
+}
+
+.btn-small {
+  padding: 10px 15px;
+}
