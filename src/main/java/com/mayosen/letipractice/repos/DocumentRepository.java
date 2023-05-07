@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Integer> {
     List<Document> findAllByNameContainingIgnoreCase(String name);
+
+    List<Document> findAllByAuthorId(int authorId);
 }

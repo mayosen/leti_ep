@@ -2,30 +2,26 @@ package com.mayosen.letipractice.controllers;
 
 import com.mayosen.letipractice.models.Document;
 import com.mayosen.letipractice.services.DocumentService;
-import com.mayosen.letipractice.services.security.AppUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.*;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/documents")
-public class DocumentController {
+public class DocumentRestController {
     private final DocumentService documentService;
 
     @Autowired
-    public DocumentController(DocumentService documentService) {
+    public DocumentRestController(DocumentService documentService) {
         this.documentService = documentService;
     }
 
     @GetMapping(value = "/bytes/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<ByteArrayResource> findDocument(@PathVariable int id) {
         Document document = documentService.findDocumentBy(id);
-
         ByteArrayResource resource = new ByteArrayResource(document.getBlob());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDisposition(ContentDisposition

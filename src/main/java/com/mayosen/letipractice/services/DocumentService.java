@@ -1,5 +1,6 @@
 package com.mayosen.letipractice.services;
 
+import com.mayosen.letipractice.mappers.DocumentMapper;
 import com.mayosen.letipractice.models.Document;
 import com.mayosen.letipractice.models.User;
 import com.mayosen.letipractice.repos.DocumentRepository;
@@ -84,29 +85,19 @@ public class DocumentService {
 
     public List<DocumentResponse> findAllDocuments() {
         return documentRepository.findAll().stream()
-            .map(document -> DocumentResponse.builder()
-                .id(document.getId())
-                .name(document.getName())
-                .author(document.getAuthor().getLogin())
-                .created(document.getCreated())
-                .updated(document.getUpdated())
-                .parsedText(document.getParsedText())
-                .topWords(document.getTopWords())
-                .build())
+            .map(DocumentMapper::documentToResponse)
             .toList();
     }
 
     public List<DocumentResponse> findAllDocumentsByName(String name) {
         return documentRepository.findAllByNameContainingIgnoreCase(name).stream()
-            .map(document -> DocumentResponse.builder()
-                .id(document.getId())
-                .name(document.getName())
-                .author(document.getAuthor().getLogin())
-                .created(document.getCreated())
-                .updated(document.getUpdated())
-                .parsedText(document.getParsedText())
-                .topWords(document.getTopWords())
-                .build())
+            .map(DocumentMapper::documentToResponse)
+            .toList();
+    }
+
+    public List<DocumentResponse> findMyDocuments(int authorId) {
+        return documentRepository.findAllByAuthorId(authorId).stream()
+            .map(DocumentMapper::documentToResponse)
             .toList();
     }
 

@@ -45,6 +45,17 @@ public class MainController {
         return "documentTable";
     }
 
+    @GetMapping(value = "/documents/my")
+    public String myDocumentTable(
+        Model model,
+        Authentication authentication
+    ) {
+        AppUserDetails userDetails = (AppUserDetails) authentication.getPrincipal();
+        List<DocumentResponse> documents = documentService.findMyDocuments(userDetails.getId());
+        model.addAttribute("documents", documents);
+        return "documentTable";
+    }
+
     @GetMapping("/documents/{id}")
     public String document(@PathVariable(required = true) int id, Model model) {
         Document document = documentService.findDocumentBy(id);
