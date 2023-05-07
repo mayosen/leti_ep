@@ -65,7 +65,9 @@
     function onUpdateClick(event) {
     }
 
-    function onDeleteClick(event) {
+    async function onDeleteClick() {
+      await fetch(`/documents/${documentId}`, { method: "DELETE" });
+      location.href = `/documents`;
     }
 
     document.addEventListener("DOMContentLoaded", () => {

@@ -26,7 +26,7 @@ public class AuthController {
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("userForm", new User());
-        return "login/register";
+        return "auth/register";
     }
 
     @PostMapping("/register")
@@ -47,11 +47,11 @@ public class AuthController {
         if (logout != null) {
             model.addAttribute("message", "You have been logged out successfully.");
         }
-        return "login/login";
+        return "auth/login";
     }
 
     @GetMapping("/")
-    public String welcome() {
+    public String menu() {
         return "redirect:/menu";
     }
 }

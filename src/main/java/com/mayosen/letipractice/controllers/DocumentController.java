@@ -1,8 +1,6 @@
 package com.mayosen.letipractice.controllers;
 
 import com.mayosen.letipractice.models.Document;
-import com.mayosen.letipractice.responses.AllDocumentsResponse;
-import com.mayosen.letipractice.responses.DocumentResponse;
 import com.mayosen.letipractice.services.DocumentService;
 import com.mayosen.letipractice.services.security.AppUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @RestController
-@RequestMapping("/documents/bytes")
+@RequestMapping("/documents")
 public class DocumentController {
     private final DocumentService documentService;
 
@@ -43,7 +40,7 @@ public class DocumentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/bytes/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<ByteArrayResource> findDocument(@PathVariable int id) {
         Document document = documentService.findDocumentBy(id);
 
@@ -54,12 +51,6 @@ public class DocumentController {
             .filename(document.getName(), StandardCharsets.UTF_8)
             .build());
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(resource);
-    }
-
-    @GetMapping("")
-    public ResponseEntity<AllDocumentsResponse> findAllDocuments() {
-        List<DocumentResponse> documents = documentService.findAllDocuments();
-        return ResponseEntity.ok(new AllDocumentsResponse(documents));
     }
 
     @DeleteMapping("/{id}")
