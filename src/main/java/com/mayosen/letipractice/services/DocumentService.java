@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -35,9 +36,9 @@ public class DocumentService {
     }
 
     @Transactional
-    public void addDocument(MultipartFile file, int authorId) {
+    public void addDocument(MultipartFile file, String name, int authorId) {
         Document document = new Document();
-        document.setName(file.getOriginalFilename());
+        document.setName(StringUtils.hasText(name) ? name : file.getOriginalFilename()) ;
         document.setAuthor(new User(authorId));
         updateDocumentFrom(document, extractBytes(file));
         LocalDate now = LocalDate.now();

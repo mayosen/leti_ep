@@ -7,9 +7,24 @@
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-  <form method="POST" class="container menu" enctype="multipart/form-data">
-    <input type="file" accept=".pdf">
-    <button type="submit" class="btn">Отправить</button>
+  <form method="POST" class="container menu" enctype="multipart/form-data" th:action="@{/documents}">
+    <input id="file-input" type="file" name="file" accept=".pdf">
+
+    <label for="name-input">Введите название файла</label>
+    <input id="name-input" type="text" class="input" name="name" accept=".pdf">
+
+    <button type="submit" class="btn">Загрузить</button>
   </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const fileInput = document.querySelector("#file-input");
+      const nameInput = document.querySelector("#name-input");
+
+      fileInput.addEventListener("change", (event) => {
+        nameInput.value = event.target.files[0].name;
+      });
+    });
+  </script>
 </body>
 </html>

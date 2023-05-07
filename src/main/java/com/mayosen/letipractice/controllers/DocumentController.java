@@ -22,13 +22,6 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> addDocument(@RequestPart MultipartFile file, Authentication authentication) {
-        AppUserDetails userDetails = (AppUserDetails) authentication.getPrincipal();
-        documentService.addDocument(file, userDetails.getId());
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateDocument(
         @PathVariable int id,
