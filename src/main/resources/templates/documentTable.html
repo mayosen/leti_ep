@@ -33,7 +33,7 @@
 
   <script>
     function onDocumentClick(event) {
-      const row = event.target.closest(".document")
+      const row = event.target.closest(".document");
       location.href = `/documents/${row.dataset.documentId}`;
     }
 
@@ -41,7 +41,7 @@
       const documents = document.querySelectorAll(".document");
       documents.forEach(document => {
         document.addEventListener("click", onDocumentClick)
-      })
+      });
     });
   </script>
 </body>

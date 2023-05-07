@@ -7,14 +7,19 @@
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-  <div class="container">
+  <div
+    class="container"
+    th:object="${document}"
+    th:data-document-id="${document.id}"
+    th:data-document-name="${document.name}"
+  >
     <div class="btn-wrap">
-      <button class="btn btn-small">Загрузить</button>
-      <button class="btn btn-small">Обновить</button>
-      <button class="btn btn-small">Удалить</button>
+      <button class="btn btn-small" id="download-btn">Загрузить</button>
+      <button class="btn btn-small" id="update-btn">Обновить</button>
+      <button class="btn btn-small" id="delete-btn">Удалить</button>
     </div>
 
-    <table class="vertical-table" th:object="${document}">
+    <table class="vertical-table" >
       <tr>
         <th>Создан</th>
         <td th:text="*{created}"></td>
@@ -41,5 +46,33 @@
       </tr>
     </table>
   </div>
+
+  <script>
+    const documentId = [[${document.id}]];
+    const documentName = "[[${document.name}]]";
+
+    async function onDownloadClick() {
+      const response = await fetch(`/documents/bytes/${documentId}`);
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = documentName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    function onUpdateClick(event) {
+    }
+
+    function onDeleteClick(event) {
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector("#download-btn").addEventListener("click", onDownloadClick);
+      document.querySelector("#update-btn").addEventListener("click", onUpdateClick);
+      document.querySelector("#delete-btn").addEventListener("click", onDeleteClick);
+    });
+  </script>
 </body>
 </html>
