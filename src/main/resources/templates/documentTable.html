@@ -20,7 +20,7 @@
       </thead>
 
       <tbody>
-        <tr th:each="document : ${documents}" th:field="${document}">
+        <tr th:each="document : ${documents}" class="row document" th:data-document-id="${document.id}">
           <td th:text="${document.created}"></td>
           <td th:text="${document.author}"></td>
           <td th:text="${document.name}"></td>
@@ -30,5 +30,19 @@
       </tbody>
     </table>
   </div>
+
+  <script>
+    function onDocumentClick(event) {
+      const row = event.target.closest(".document")
+      location.href = `/documents/${row.dataset.documentId}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const documents = document.querySelectorAll(".document");
+      documents.forEach(document => {
+        document.addEventListener("click", onDocumentClick)
+      })
+    });
+  </script>
 </body>
 </html>

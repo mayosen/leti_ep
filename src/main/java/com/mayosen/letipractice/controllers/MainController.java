@@ -1,13 +1,13 @@
 package com.mayosen.letipractice.controllers;
 
 import com.mayosen.letipractice.models.Document;
-import com.mayosen.letipractice.repos.DocumentRepository;
 import com.mayosen.letipractice.responses.DocumentResponse;
 import com.mayosen.letipractice.services.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -26,8 +26,13 @@ public class MainController {
         return "menu";
     }
 
-    @GetMapping("/table")
-    public String table(@RequestParam(required = false) String name, Model model) {
+    @GetMapping("/find")
+    public String find() {
+        return "find";
+    }
+
+    @GetMapping(value = "/documents")
+    public String documentTable(@RequestParam(required = false) String name, Model model) {
         List<DocumentResponse> documents;
         if (name == null) {
             documents = documentService.findAllDocuments();
@@ -35,11 +40,13 @@ public class MainController {
             documents = documentService.findAllDocumentsByName(name);
         }
         model.addAttribute("documents", documents);
-        return "table";
+        return "documentTable";
     }
 
-    @GetMapping("/find")
-    public String find() {
-        return "find";
+    @GetMapping("/documents/{id}")
+    public String document(@PathVariable(required = true) int id, Model model) {
+        Document document = documentService.findDocumentBy(id);
+        model.addAttribute("document", document);
+        return "document";
     }
 }

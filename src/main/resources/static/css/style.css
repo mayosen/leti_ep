@@ -27,6 +27,7 @@ a {
   color: #fff;
   background-color: #0061BB;
   border: none;
+  transition: background-color 0.3s ease;
 }
 
 .btn:hover {
@@ -104,4 +105,13 @@ table {
 
 .btn-small {
   padding: 10px 15px;
+}
+
+.row {
+  transition: background-color 0.3s ease;
+}
+
+.row:hover {
+  background-color: #bebebe;
+  cursor: pointer;
 }

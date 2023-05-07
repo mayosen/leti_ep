@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
-@RequestMapping("/documents")
+@RequestMapping("/documents/bytes")
 public class DocumentController {
     private final DocumentService documentService;
 
