@@ -37,4 +37,9 @@ public class MainController {
         model.addAttribute("documents", documents);
         return "table";
     }
+
+    @GetMapping("/find")
+    public String find() {
+        return "find";
+    }
 }

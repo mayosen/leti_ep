@@ -7,9 +7,10 @@
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-  <form method="POST" class="container menu" enctype="multipart/form-data">
-    <input type="file" accept=".pdf">
-    <button type="submit" class="btn">Отправить</button>
+  <form method="GET" class="container" enctype="multipart/form-data" th:action="@{/table}">
+    <label for="name-input">Введите название документа</label>
+    <input name="name" class="input" id="name-input" type="text">
+    <button type="submit" class="btn">Найти</button>
   </form>
 </body>
 </html>
