@@ -48,9 +48,9 @@ public class DocumentService {
     }
 
     @Transactional
-    public void updateDocument(int id, MultipartFile file, int authorId) {
+    public void updateDocument(int id, MultipartFile file, String name) {
         Document document = findDocumentBy(id);
-        document.setName(file.getOriginalFilename());
+        document.setName(StringUtils.hasText(name) ? name : file.getOriginalFilename());
         updateDocumentFrom(document, extractBytes(file));
         document.setUpdated(LocalDate.now());
         documentRepository.save(document);

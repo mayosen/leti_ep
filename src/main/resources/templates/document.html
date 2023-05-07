@@ -47,9 +47,9 @@
     </table>
   </div>
 
-  <script>
+  <script th:inline="javascript">
     const documentId = [[${document.id}]];
-    const documentName = "[[${document.name}]]";
+    const documentName = [[${document.name}]];
 
     async function onDownloadClick() {
       const response = await fetch(`/documents/bytes/${documentId}`);
@@ -62,13 +62,13 @@
       link.remove();
     }
 
-    function onUpdateClick(event) {
-
+    function onUpdateClick() {
+      location.href = `/upload?replaceId=${documentId}`;
     }
 
     async function onDeleteClick() {
       await fetch(`/documents/${documentId}`, { method: "DELETE" });
-      location.href = `/documents`;
+      location.href = "/documents";
     }
 
     document.addEventListener("DOMContentLoaded", () => {

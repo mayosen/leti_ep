@@ -22,17 +22,6 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @PostMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> updateDocument(
-        @PathVariable int id,
-        @RequestPart MultipartFile file,
-        Authentication authentication
-    ) {
-        AppUserDetails userDetails = (AppUserDetails) authentication.getPrincipal();
-        documentService.updateDocument(id, file, userDetails.getId());
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping(value = "/bytes/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<ByteArrayResource> findDocument(@PathVariable int id) {
         Document document = documentService.findDocumentBy(id);

@@ -9,10 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -56,11 +53,14 @@ public class MainController {
     }
 
     @GetMapping("/upload")
-    public String upload() {
+    public String upload(@RequestParam(required = false) String replaceId, Model model) {
+        if (replaceId != null) {
+            model.addAttribute("replaceId", replaceId);
+        }
         return "upload";
     }
 
-    @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/documents", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String addDocument(
         @RequestParam("name") String name,
         @RequestParam("file") MultipartFile file,
@@ -68,6 +68,16 @@ public class MainController {
     ) {
         AppUserDetails userDetails = (AppUserDetails) authentication.getPrincipal();
         documentService.addDocument(file, name, userDetails.getId());
+        return "redirect:/documents";
+    }
+
+    @PostMapping(value = "/documents/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String updateDocument(
+        @PathVariable int id,
+        @RequestParam("name") String name,
+        @RequestPart MultipartFile file
+    ) {
+        documentService.updateDocument(id, file, name);
         return "redirect:/documents";
     }
 }
