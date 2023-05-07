@@ -95,6 +95,20 @@ public class DocumentService {
             .toList();
     }
 
+    public List<DocumentResponse> findAllDocumentsByName(String name) {
+        return documentRepository.findAllByNameContainingIgnoreCase(name).stream()
+            .map(document -> DocumentResponse.builder()
+                .id(document.getId())
+                .name(document.getName())
+                .author(document.getAuthor().getLogin())
+                .created(document.getCreated())
+                .updated(document.getUpdated())
+                .parsedText(document.getParsedText())
+                .topWords(document.getTopWords())
+                .build())
+            .toList();
+    }
+
     @Transactional
     public void deleteDocument(int id) {
         Document document = findDocumentBy(id);
