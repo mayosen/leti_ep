@@ -3,6 +3,8 @@ package com.mayosen.letipractice.controllers;
 import com.mayosen.letipractice.models.User;
 import com.mayosen.letipractice.services.UserService;
 import com.mayosen.letipractice.services.security.SecurityService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +30,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute("userForm") User user) {
+    public String register(@ModelAttribute("userForm") User user, HttpServletRequest request, HttpServletResponse response) {
         userService.create(user);
-        securityService.autoLogin(user.getLogin(), user.getPassword());
+        securityService.autoLogin(user.getLogin(), user.getPassword(), request, response);
         return "redirect:/menu";
     }
 
