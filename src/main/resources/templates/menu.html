@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Menu</title>
-  <link rel="stylesheet" href="../static/css/normalize.css">
-  <link rel="stylesheet" href="../static/css/style.css">
+  <title>Меню</title>
+  <link rel="stylesheet" th:href="@{/css/normalize.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
   <div class="container menu">
-    <button class="btn">Загрузить PDF-файл</button>
-    <button class="btn">Посмотреть загруженные файлы</button>
-    <button class="btn">Найти файл по названию</button>
+    <button class="btn">
+      <a th:href="@{/upload}">Загрузить PDF-файл</a>
+    </button>
+
+    <button class="btn">
+      <a th:href="@{/table}">Посмотреть загруженные файлы</a>
+    </button>
+
+    <button class="btn">
+      <a th:href="@{/find}">Найти файл по названию</a>
+    </button>
   </div>
 </body>
 </html>

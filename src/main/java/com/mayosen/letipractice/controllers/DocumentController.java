@@ -1,7 +1,6 @@
 package com.mayosen.letipractice.controllers;
 
 import com.mayosen.letipractice.models.Document;
-import com.mayosen.letipractice.models.User;
 import com.mayosen.letipractice.responses.AllDocumentsResponse;
 import com.mayosen.letipractice.responses.DocumentResponse;
 import com.mayosen.letipractice.services.DocumentService;

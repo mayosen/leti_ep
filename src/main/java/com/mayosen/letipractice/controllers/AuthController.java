@@ -24,14 +24,14 @@ public class AuthController {
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("userForm", new User());
-        return "register";
+        return "login/register";
     }
 
     @PostMapping("/register")
     public String register(@ModelAttribute("userForm") User user) {
         userService.create(user);
         securityService.autoLogin(user.getLogin(), user.getPassword());
-        return "redirect:/welcome";
+        return "redirect:/menu";
     }
 
     @GetMapping("/login")
@@ -45,11 +45,11 @@ public class AuthController {
         if (logout != null) {
             model.addAttribute("message", "You have been logged out successfully.");
         }
-        return "login";
+        return "login/login";
     }
 
-    @GetMapping({"/", "/welcome"})
+    @GetMapping("/")
     public String welcome() {
-        return "welcome";
+        return "redirect:/menu";
     }
 }

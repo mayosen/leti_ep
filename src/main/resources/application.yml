@@ -1,6 +1,6 @@
 logging:
   level:
-    web: DEBUG
+    web: INFO
     org.apache.pdfbox: INFO
     org.apache.fontbox: INFO
     com.mayosen.letipractice: DEBUG
