@@ -38,3 +38,4 @@ out/
 
 samples/
 tessdata/
+docker.env
